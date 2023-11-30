@@ -21,14 +21,11 @@ jobs:
         with:
           vs-version: '16.0'  # Set the Visual Studio version if needed
 
-      - name: Publish to folder
-        run: msbuild /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
-
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: ASP-app
-          path: '/published/**'
+          path: '/'  # Include all files in the repository root
 
   deploy:
     runs-on: windows-latest
@@ -51,5 +48,3 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5C1DFC4D54824A1082C4000F2F79558A }}
           package: .
-
-
