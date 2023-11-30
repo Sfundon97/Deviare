@@ -20,14 +20,6 @@ jobs:
         uses: microsoft/setup-msbuild@v1.0.2
         with:
           vs-version: '16.0'  # Set the Visual Studio version if needed
-          
-      - name: Install NuGet
-        uses: nuget/setup-nuget@v1
-        with:
-          nuget-version: ${{ env.NUGET_VERSION }}
-
-      - name: Restore NuGet packages
-        run: nuget restore
 
       - name: Publish to folder
         run: msbuild /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
@@ -59,4 +51,5 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5C1DFC4D54824A1082C4000F2F79558A }}
           package: .
+
 
